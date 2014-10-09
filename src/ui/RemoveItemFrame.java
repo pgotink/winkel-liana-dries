@@ -112,7 +112,7 @@ public class RemoveItemFrame extends JFrame
 			this.shop.removeItem(id);
 			result.setVisible(true);
 			handler.setShop(this.shop);
-			handler.write();
+			handler.writeItem();
 		}catch(IllegalArgumentException e){
 			JOptionPane.showMessageDialog(null, e.getMessage(), 
 					 "Error", JOptionPane.ERROR_MESSAGE); 
