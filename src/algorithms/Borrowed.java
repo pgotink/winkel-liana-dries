@@ -37,4 +37,10 @@ public class Borrowed implements IState
 		throw new IllegalArgumentException("You can't repair an item that is not returned.");
 	}
 	
+	@Override
+	public String toString()
+	{
+		return "borrowed";
+	}
+
 }

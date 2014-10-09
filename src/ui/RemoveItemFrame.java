@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,30 +21,31 @@ import db.ShopDatabaseHandler;
 import db.TXTReaderAndWriter;
 import domain.Shop;
 
-public class ReturnItemFrame extends JFrame
+public class RemoveItemFrame extends JFrame 
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int FRAME_WIDTH = 400;
-	private static final int FRAME_HEIGHT = 120;
+	private static final int FRAME_WIDTH = 300;
+	private static final int FRAME_HEIGHT = 100;
 	
 	private Shop shop;
 	private ShopDatabaseHandler handler;
 	private String file = "Winkel.txt";
 	private JLabel result;
-	private JCheckBox isDamaged;
 	
-	public ReturnItemFrame(String title, Shop shop) 
+	public RemoveItemFrame(String title, Shop shop)
 	{
 		super(title);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		
+		//Set window in the center of the screen
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-		
+				
 		this.shop = shop;
 		try {
 			handler = new TXTReaderAndWriter(file, this.shop);
@@ -63,7 +63,7 @@ public class ReturnItemFrame extends JFrame
 		JPanel resultPanel = new JPanel();
 		
 		flowPanel.setLayout(new BorderLayout());
-		inputPanel.setLayout(new GridLayout(2,2));
+		inputPanel.setLayout(new GridLayout(1,2));
 		submitPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		resultPanel.setLayout(new BorderLayout());
 		
@@ -78,52 +78,41 @@ public class ReturnItemFrame extends JFrame
 		JTextField itemID = new JTextField();
 		inputPanel.add(itemID);
 		
-		isDamaged = new JCheckBox("damaged");
-		inputPanel.add(isDamaged);
-		
 		JButton submitButton = new JButton("Submit");
 		submitPanel.add(submitButton);
 		
-		result = new JLabel("The item has been succesfully returned.");
+		result = new JLabel("The item has been succesfully removed.");
 		result.setVisible(false);
 		resultPanel.add(result);
 		
 		this.add(flowPanel);
 		
-		ActionListener listener = new returnItemListener(itemID);
+		ActionListener listener = new removeItemListener(itemID);
 		submitButton.addActionListener(listener);
 	}
 	
-	class returnItemListener implements ActionListener
+	class removeItemListener implements ActionListener
 	{
 		private JTextField itemID;
 		
-		public returnItemListener(JTextField itemID)
+		public removeItemListener(JTextField itemID)
 		{
 			this.itemID = itemID;
 		}
 		
 		public void actionPerformed(ActionEvent event)
 		{
-			returnItem(itemID.getText());
+			removeItem(itemID.getText());
 		}
 	}
 	
-	private void returnItem(String id) 
+	private void removeItem(String id) 
 	{
 		try{
-			if(isDamaged.isSelected())
-			{
-				this.shop.returnItem(id);
-				this.shop.declareItemDamaged(id);
-			}
-			else
-			{
-				this.shop.returnItem(id);
-			}
+			this.shop.removeItem(id);
 			result.setVisible(true);
 			handler.setShop(this.shop);
-			handler.writeItem();
+			handler.write();
 		}catch(IllegalArgumentException e){
 			JOptionPane.showMessageDialog(null, e.getMessage(), 
 					 "Error", JOptionPane.ERROR_MESSAGE); 
@@ -132,9 +121,10 @@ public class ReturnItemFrame extends JFrame
 					 "Error", JOptionPane.ERROR_MESSAGE); 
 		}
 	}
-	
+
 	public Shop getShop()
 	{
 		return this.shop;
 	}
+	
 }

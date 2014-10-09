@@ -43,8 +43,10 @@ public class MainFrame extends JFrame
 		
 		//Make buttons
 		JButton addItemButton = new JButton("Add item");
+		JButton removeItemButton = new JButton("Remove item");
 		JButton borrowItemButton = new JButton("Borrow item");
 		JButton returnItemButton = new JButton("Return item");
+		JButton repairItemButton = new JButton("Repair item");
 		JButton showItemButton = new JButton("Show item");
 		JButton showPriceButton = new JButton("Show price");
 		JButton showAllItemsButton = new JButton("Show all items");
@@ -54,14 +56,18 @@ public class MainFrame extends JFrame
 		//Make main window
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 1));
+		
+		//Set window in the center of the screen
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		this.setResizable(false);
 		
 		//Add menu options to main window
 		panel.add(addItemButton);
+		panel.add(removeItemButton);
 		panel.add(borrowItemButton);
 		panel.add(returnItemButton);
+		panel.add(repairItemButton);
 		panel.add(showItemButton);
 		panel.add(showPriceButton);
 		panel.add(showAllItemsButton);
@@ -73,11 +79,17 @@ public class MainFrame extends JFrame
 		ActionListener addItemlistener = new addItemListener();
 		addItemButton.addActionListener(addItemlistener);
 		
+		ActionListener removeItemlistener = new removeItemListener();
+		removeItemButton.addActionListener(removeItemlistener);
+		
 		ActionListener borrowListener = new borrowItemListener();
 		borrowItemButton.addActionListener(borrowListener);
 		
 		ActionListener returnItemListener = new returnItemListener();
 		returnItemButton.addActionListener(returnItemListener);
+		
+		ActionListener repairItemListener = new repairItemListener();
+		repairItemButton.addActionListener(repairItemListener);
 		
 		ActionListener showItemListener = new showItemListener();
 		showItemButton.addActionListener(showItemListener);
@@ -103,6 +115,14 @@ public class MainFrame extends JFrame
 		}
 	}
 	
+	class removeItemListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			removeItem();
+		}
+	}
+	
 	class borrowItemListener implements ActionListener
 	{
 	
@@ -118,6 +138,15 @@ public class MainFrame extends JFrame
 		public void actionPerformed(ActionEvent event)
 		{
 			returnItem();
+		}
+	}
+	
+	class repairItemListener implements ActionListener
+	{
+	
+		public void actionPerformed(ActionEvent event)
+		{
+			repairItem();
 		}
 	}
 	
@@ -167,6 +196,12 @@ public class MainFrame extends JFrame
 		addFrame.setVisible(true);
 	}
 	
+	public void removeItem()
+	{
+		RemoveItemFrame removeFrame = new RemoveItemFrame("Remove Item", this.shop);
+		removeFrame.setVisible(true);
+	}
+	
 	private void borrowItem()
 	{
 		BorrowItemFrame borrowFrame = new BorrowItemFrame("Borrow Item", shop);
@@ -177,6 +212,12 @@ public class MainFrame extends JFrame
 	{
 		ReturnItemFrame returnFrame = new ReturnItemFrame("Return Item", shop);
 		returnFrame.setVisible(true);
+	}
+	
+	private void repairItem()
+	{
+		RepairItemFrame repairFrame = new RepairItemFrame("Repair Item", shop);
+		repairFrame.setVisible(true);
 	}
 	
 	private void showItem()

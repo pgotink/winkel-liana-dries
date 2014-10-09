@@ -30,4 +30,9 @@ public class Damaged implements IState
 		this.item.setState(item.getLendableState());
 	}
 	
+	@Override
+	public String toString()
+	{
+		return "damaged";
+	}
 }

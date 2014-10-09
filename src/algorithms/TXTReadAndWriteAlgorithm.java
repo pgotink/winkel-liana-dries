@@ -56,7 +56,7 @@ public class TXTReadAndWriteAlgorithm implements IReaderAndWriter
 				String stringType = lijn.next();
 				String title = lijn.next();
 				String priceString = lijn.next();
-				String available =lijn.next();
+				String state = lijn.next();
 				String id = lijn.next();
 				
 				ItemType type = ItemType.valueOf(stringType.toUpperCase());
@@ -65,8 +65,11 @@ public class TXTReadAndWriteAlgorithm implements IReaderAndWriter
 				Item newItem = new Item(type, title);
 				newItem.setPrice(price);
 				
-				if(!available.equals("available"))
+				if(state.equals("borrowed"))
 					newItem.borrow();
+				if(state.equals("damaged"))
+					newItem.setState(new Damaged(newItem));
+				//else item is available
 				shop.addItem(id, newItem);
 			}
 			if (scanner!=null){

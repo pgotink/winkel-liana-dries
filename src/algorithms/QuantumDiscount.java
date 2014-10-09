@@ -10,7 +10,7 @@ public class QuantumDiscount implements IDiscount{
 
 	@Override
 	public double getDiscount(double price, int days) {
-		return price * (0.25);
+		return price * (25/100.0);
 	}
 
 }

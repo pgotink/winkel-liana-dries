@@ -29,5 +29,11 @@ public class Lendable implements IState
 	{
 		throw new IllegalArgumentException("You cant't repair an item that isn't damaged.");
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "available";
+	}
 
 }

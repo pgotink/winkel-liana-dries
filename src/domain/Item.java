@@ -79,7 +79,7 @@ public class Item
 	
 	public IState getLendableState()
 	{
-		return this.getLendableState();
+		return this.lendableState;
 	}
 	
 	public IState getDamagedState()
@@ -105,22 +105,14 @@ public class Item
 	@Override
 	public String toString()
 	{
-		String uit = this.type.getType() + " with title " + this.getTitle() + ", " + "price: " + this.type.getPrice() + ", ";
-		if(this.getState() == this.getBorrowedState())
-			uit += " borrowed, ";
-		else
-			uit += " available, ";
-		return uit;
+		return this.type.getType() + " with title " + this.getTitle() + ", " + "price: " 
+				+ this.type.getPrice() + ", " + this.getState().toString() + ", ";
 	}
 	
 	public String toTXT()
 	{
-		String uit =  this.type.getType() + ";"  + this.getTitle() + ";" + this.type.getPrice() + ";";
-		if(this.getState() == this.getBorrowedState())
-			uit += "borrowed;";
-		else
-			uit += "available;";
-		return uit;
+		return this.type.getType() + ";"  + this.getTitle() + ";" + this.type.getPrice() 
+				+ ";" + this.getState().toString() + ";";
 	}
 	
 	public void setPrice(double price) throws IllegalArgumentException
